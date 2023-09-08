@@ -1,0 +1,68 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+% Update this information to reflect yourself
+\title{Assignment 1: 3SUM}
+\author{Christian Vilen}
+\date{2022-09-20}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+Introduce the problem you are addressing here, and give a very brief
+overview of what you are about to report on.
+
+\section{Implementation}
+
+Explain briefly what you have implemented and how. This might also be
+an appropriate place to explain how you verified the correctness of
+your implementation.
+
+\subsection{Hardware and Software specification}
+All of the experiments has been executed on the following equipment:
+\begin{itemize}
+\item Computer: MacBook Pro, 14-inch 2021.
+\item Hardware: Apple M1 Pro, 16gb ram.
+\item OS Version: Mac OS X Ventura 13.5.1
+\item Java: 17.0.5 2022-10-18 LTS
+\item Gradle: 7.6
+\item Kotlin: 1.7.10
+\end{itemize}
+
+\subsection{Tests of ThreeSum Algorithms}
+The implementation of the three different ThreeSum algorithms has been tested with various JUnit tests to verify their correctness. This includes multiple variable cases of 0, 1 and more triplets summing to 0 or not.
+
+\section{Experiments}
+
+Explain what kind of experiments you run. Also tell what kind of
+hardware and software were used to run the experiments.
+
+Present your results numerically in a table, and also visually as a
+plot. Remember to refer to the tables and figures in your text; it is
+not sufficient to only include them, but they should also be made part
+of the prose. Like so: here we refer to Table~\ref{tbl:resultscubic}.
+
+\begin{table}[h]
+  \begin{center}
+  \caption{Write a caption that tells what this table is about.}
+  \label{tbl:resultscubic}
+  % Uncomment the line below to include the automatically generated
+  % table from the file.
+  % \input{threesum_cubic_tabular.tex}
+  \end{center}
+\end{table}
+https://www.overleaf.com/project/64fabec8a0a055e063505cfa
+\begin{figure}[h]
+  \begin{center}
+    % uncomment the line below to include the plot that you
+    % automatically generated.
+    % \includegraphics[width=\textwidth]{plot_cubic_vs_hashmap.pdf}
+    \caption{Write a descriptive caption here.}
+    \label{fig:runtimes}
+  \end{center}
+\end{figure}
+
+\end{document}
