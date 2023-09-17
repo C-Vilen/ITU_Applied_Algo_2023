@@ -76,7 +76,7 @@ def measure(algorithm: str, jar: str,
     return end - start
 
 if __name__ == '__main__':
-    print(measure('cubic', 
+    print(measure('three-cubic', 
         'threesum/app/build/libs/app.jar',
         INPUT_DATA[30][0]))
     
@@ -112,9 +112,13 @@ def benchmark(algorithm: str, jar: str)-> \
 import csv
 
 INSTANCES: List[Tuple[str,str]] = [
-    ('cubic', 'threesum/app/build/libs/app.jar'),
-    ('quadratic', 'threesum/app/build/libs/app.jar'),
-    ('hashmap', 'threesum/app/build/libs/app.jar')
+    ('three-cubic', 'threesum/app/build/libs/app.jar'),
+    ('three-quadratic', 'threesum/app/build/libs/app.jar'),
+    ('three-hashmap', 'threesum/app/build/libs/app.jar'),
+    ('three-new-hashmap', 'threesum/app/build/libs/app.jar'),
+    ('four-cubic', 'threesum/app/build/libs/app.jar'),
+    ('four-quadratic', 'threesum/app/build/libs/app.jar'),
+    ('four-hashmap', 'threesum/app/build/libs/app.jar')
 ]
 
 if __name__ == '__main__':

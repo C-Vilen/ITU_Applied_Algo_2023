@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class ThreeSumTest {
     @Test 
-    public void testCubic() {
+    public void testThreeSumCubic() {
         // Zero triplets
         assertNull(ThreeSum.threeSumCubic(
             new int [] { }
@@ -45,7 +45,7 @@ public class ThreeSumTest {
     }
 
     @Test
-    public void testQuadratic() {
+    public void testThreeSumQuadratic() {
         // Zero triplets
         assertNull(ThreeSum.threeSumQuadratic(
             new int [] { }
@@ -82,7 +82,7 @@ public class ThreeSumTest {
     }
 
     @Test
-    public void testHashMap() {
+    public void testThreeSumHashMap() {
         // Zero triplets, no solution
         assertNull(ThreeSum.threeSumHashMap(
             new int [] { }
@@ -124,6 +124,43 @@ public class ThreeSumTest {
         assertNotEquals(new int[] { 1, 3, -4 },
             ThreeSum.newThreeSumHashMap(new int [] { 
                 1, 2, 3, -4, -5, -6 
+            })
+        );
+    }
+
+    @Test
+    public void testFourSumCubic() {
+        // Zero triplets
+        assertNull(ThreeSum.fourSumCubic(
+            new int [] { }
+        ));
+
+        // One triplet, no solution
+        assertNull(ThreeSum.fourSumCubic(
+            new int [] { 1, 2, 3, 4 }
+        ));
+
+        // One triplet, not null
+        assertNotNull(ThreeSum.fourSumCubic(
+            new int [] { 5, 2, -3, -4 }
+        ));
+
+        // One triplet, correct solution
+        assertArrayEquals(new int[] { -3, 2, -3, 4 },
+           ThreeSum.fourSumCubic(new int [] { 
+               -3, 2, -3, 4 
+           })
+        );
+
+        // Two triplets, no solution
+        assertNull(ThreeSum.fourSumCubic(
+            new int [] { 1, 2, 3, 4, 5, 6 }
+        ));
+
+        // Two triplets, correct solution
+        assertArrayEquals(new int[] { 1, 2, 3, -6 },
+            ThreeSum.fourSumCubic(new int [] { 
+                1, 2, 3, -4, -5, -6, 5 
             })
         );
     }
