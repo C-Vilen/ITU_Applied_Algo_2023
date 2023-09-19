@@ -66,24 +66,24 @@ def write_latex_tabular(res: np.ndarray,
 import matplotlib.pyplot as plt # type: ignore
   
 # ThreeSum plotting function
-# def plot_three_algorithms(res: Dict[str,np.ndarray], 
-#     filename: str):
-#     (fig, ax) = plt.subplots()
-#     algorithms = ['three-cubic', 'three-quadratic', 'three-hashmap']
-#     for algorithm in algorithms:
-#         ns = res[algorithm][:,0]
-#         means = res[algorithm][:,1]
-#         stds = res[algorithm][:,2]
-#         ax.errorbar(ns, means, stds, marker='o', 
-#             capsize = 3.0)
-#     ax.set_xlabel('Number of elements $n$')
-#     ax.set_ylabel('Time (s)')
-#     ax.set_xscale('log')
-#     ax.set_yscale('log')
-#     ax.legend(['Cubic algorithm', 'Quadratic algorithm', 'Hashmap algorithm'])
-#     fig.savefig(filename)
-
 def plot_three_algorithms(res: Dict[str,np.ndarray], 
+    filename: str):
+    (fig, ax) = plt.subplots()
+    algorithms = ['three-cubic', 'three-quadratic', 'three-hashmap']
+    for algorithm in algorithms:
+        ns = res[algorithm][:,0]
+        means = res[algorithm][:,1]
+        stds = res[algorithm][:,2]
+        ax.errorbar(ns, means, stds, marker='o', 
+            capsize = 3.0)
+    ax.set_xlabel('Number of elements $n$')
+    ax.set_ylabel('Time (s)')
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.legend(['Cubic algorithm', 'Quadratic algorithm', 'Hashmap algorithm'])
+    fig.savefig(filename)
+
+def plot_three_specific_algorithms(res: Dict[str,np.ndarray], 
     filename: str):
     (fig, ax) = plt.subplots()
     algorithms = ['three-cubic', 'three-quadratic', 'three-hashmap', 'three-new-hashmap']
@@ -122,6 +122,24 @@ def plot_four_algorithms(res: Dict[str,np.ndarray],
         'Quadratic algorithm', 'Hashmap algorithm'])
     fig.savefig(filename)
 
+def plot_four_specific_algorithms(res: Dict[str,np.ndarray], 
+    filename: str):
+    (fig, ax) = plt.subplots()
+    algorithms = ['four-cubic', 'four-quadratic', 'four-hashmap']
+    for algorithm in algorithms:
+        ns = res[algorithm][:8,0]
+        means = res[algorithm][:8,1]
+        stds = res[algorithm][:8,2]
+        ax.errorbar(ns, means, stds, marker='o', 
+            capsize = 3.0)
+    ax.set_xlabel('Number of elements $n$')
+    ax.set_ylabel('Time (s)')
+    ax.set_xscale('linear')
+    ax.set_yscale('linear')
+    ax.legend(['Cubic algorithm', 
+        'Quadratic algorithm', 'Hashmap algorithm'])
+    fig.savefig(filename)
+
 
 # ---------------------
 # Generating tables and figures for three sum
@@ -132,6 +150,8 @@ write_latex_tabular(refined_results['three-hashmap'], 'three_sum_hashmap.tex')
 write_latex_tabular(refined_results['three-new-hashmap'], 'three_sum_new_hashmap.tex')
 plot_three_algorithms(refined_results, 'three_sum_start.pdf')
 
+plot_three_specific_algorithms(refined_results, 'three_sum_start.pdf')
+
 # ---------------------
 # Generating tables and figures for four sum
 # ---------------------
@@ -139,3 +159,4 @@ write_latex_tabular(refined_results['four-cubic'], 'four_sum_cubic.tex')
 write_latex_tabular(refined_results['four-quadratic'], 'four_sum_quadratic.tex')
 write_latex_tabular(refined_results['four-hashmap'], 'four_sum_hashmap.tex')
 plot_four_algorithms(refined_results, 'four_sum.pdf')
+plot_four_specific_algorithms(refined_results, 'four_start_sum.pdf')
