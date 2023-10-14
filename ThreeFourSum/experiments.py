@@ -1,9 +1,12 @@
-
+import subprocess
+from typing import List, Dict, Tuple
+import numpy as np # type: ignore
+import time
+import csv
 
 # ---------------------
 # Run Java application from Python
 # ---------------------
-import subprocess
 TIMEOUT = 30
 
 # run the given jar package,
@@ -13,18 +16,20 @@ TIMEOUT = 30
 # process,
 # and return the stdout from the process as string
 def run_java(jar: str, arg: str, input: str)->str:
-    p = subprocess.Popen(['java','-jar',jar,arg], 
+    print('Running java...')
+    p = subprocess.Popen(['java','-jar', '-Xms8g',jar,arg], 
         stdin=subprocess.PIPE, 
         stdout=subprocess.PIPE)
     (output,_) = p.communicate(input.encode('utf-8'), 
         timeout=TIMEOUT)
     return output.decode('utf-8')
 
-if __name__ == '__main__':
-    print(run_java('threesum/app/build/libs/app.jar',
-        'cubic','3\n1 2 3'))
-    print(run_java('threesum/app/build/libs/app.jar',
-        'cubic','3\n1 2 -3'))
+# Check that the application works
+# if __name__ == '__main__':
+#     print(run_java('threesum/app/build/libs/app.jar',
+#         'cubic','3\n1 2 3'))
+#     print(run_java('threesum/app/build/libs/app.jar',
+#         'cubic','3\n1 2 -3'))
     
 
 
@@ -32,10 +37,9 @@ if __name__ == '__main__':
 # Generating input data
 # ---------------------
 
-from typing import List, Dict, Tuple
-import numpy as np # type: ignore
-
 TIMEOUT = 30
+
+# FourSum HashMap gave a OutOfMemoryError exception when I_MAX = 25 and random OutOfMemoryError exception at random times in the benchmarking process.
 
 # how many different values of n
 I_MAX: int = 30
@@ -61,11 +65,8 @@ INPUT_DATA: Dict[int,List[List[int]]] = {
 # ---------------------
 # Add a framework to measure the running time
 # ---------------------
-from typing import List
-import time
-
-def measure(algorithm: str, jar: str, 
-    input: List[int])->float:
+def measure(algorithm: str, jar: str, input: List[int])->float:
+    print('Measuring '+algorithm+' on '+str(len(input))+' inputs')
     input_string: str = f'{len(input)}\n' + \
         ' '.join(map(str,input))
     start: float = time.time()
@@ -75,10 +76,11 @@ def measure(algorithm: str, jar: str,
     assert result_string.strip() == 'null'
     return end - start
 
-if __name__ == '__main__':
-    print(measure('three-cubic', 
-        'threesum/app/build/libs/app.jar',
-        INPUT_DATA[30][0]))
+# Test to show measure function works
+# if __name__ == '__main__':
+#     print(measure('three-cubic', 
+#         'threesum/app/build/libs/app.jar',
+#         INPUT_DATA[30][0]))
     
 
 
@@ -89,7 +91,7 @@ if __name__ == '__main__':
 def benchmark(algorithm: str, jar: str)-> \
     List[Tuple[int,float]]:
     results: List[Tuple[int,float]] = list()
-
+    print(f'Benchmarking {algorithm}...')
     for n in NS:
         try: 
             result_n: List[Tuple[int,float]] = list()
@@ -100,6 +102,7 @@ def benchmark(algorithm: str, jar: str)-> \
                 result_n.append((n,diff))
             results += result_n
         except subprocess.TimeoutExpired:
+            print("Timeout reached")
             break
     return results
 
@@ -109,18 +112,31 @@ def benchmark(algorithm: str, jar: str)-> \
 # ---------------------
 # Putting it all together (generating the csv file)
 # ---------------------
-import csv
+# # ThreeSum testing
+# INSTANCES: List[Tuple[str,str]] = [
+#     ('three-cubic', 'project-files/app/build/libs/app.jar'),
+#     ('three-quadratic', 'project-files/app/build/libs/app.jar'),
+#     ('three-hashmap', 'project-files/app/build/libs/app.jar')
+# ]
 
+# FourSum testing
+# INSTANCES: List[Tuple[str,str]] = [
+#     ('four-quartic', 'project-files/app/build/libs/app.jar'),
+#     ('four-cubic', 'project-files/app/build/libs/app.jar'),
+#     ('four-hashmap', 'project-files/app/build/libs/app.jar')
+# ]
+
+## Testing everything
 INSTANCES: List[Tuple[str,str]] = [
-    ('three-cubic', 'threesum/app/build/libs/app.jar'),
-    ('three-quadratic', 'threesum/app/build/libs/app.jar'),
-    ('three-hashmap', 'threesum/app/build/libs/app.jar'),
-    ('three-new-hashmap', 'threesum/app/build/libs/app.jar'),
-    ('four-cubic', 'threesum/app/build/libs/app.jar'),
-    ('four-quadratic', 'threesum/app/build/libs/app.jar'),
-    ('four-hashmap', 'threesum/app/build/libs/app.jar')
+    ('three-cubic', 'project-files/app/build/libs/app.jar'),
+    ('three-quadratic', 'project-files/app/build/libs/app.jar'),
+    ('three-hashmap', 'project-files/app/build/libs/app.jar'),
+    ('four-quartic', 'project-files/app/build/libs/app.jar'),
+    ('four-cubic', 'project-files/app/build/libs/app.jar'),
+    ('four-hashmap', 'project-files/app/build/libs/app.jar')
 ]
 
+print('Creating results.csv')
 if __name__ == '__main__':
     with open('results.csv','w') as f:
         writer = csv.DictWriter(f, 
